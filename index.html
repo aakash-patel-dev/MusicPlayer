@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        <div class="music-container">
+             <h2 id="name">Music Player</h2>
+             <h3 id="musiclist">The Music List</h3>
+             <div class="img-container">
+                <img src="images/m1.png" alt=""/>
+             </div>
+             <audio src="music/music1.mp3"></audio>
+            <div class="audio-controls">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+                 <i class="fas fa-play" id="play" title="play"></i>
+                 <i class="fas fa-forward" id="next" title="next"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const name = document.getElementById("name");
+        const musiclist = document.getElementById("musiclist");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const songs= [
+            {
+            name:"music1",
+            title:"m1",
+            musiclist:"m1",
+
+        },
+        {
+            name:"music2",
+            title:"m2",
+            musiclist:"m2"
+        },
+        {
+            name:"music3",
+            title:"m3",
+            musiclist:"m3"
+
+        }
+    ];
+
+        let playing = false;
+       const playmusic =()=>{
+            playing= true;
+            audio.play();
+            play.classList.replace("fa-play","fa-pause")
+
+        };  
+        const pausemusic = ()=>{
+            playing= false;
+          
+            play.classList.replace("fa-pause","fa-play")
+            audio.pause();
+
+        };
+
+        play.addEventListener("click",()=>{
+            if(playing){
+
+            pausemusic();        
+        }
+            else{
+            playmusic();
+            
+        }
+
+        })
+
+        const loadSongs= (songs)=>{
+            name.textContent = songs.name;
+            musiclist.textContent = songs.musiclist;
+           
+            audio.src = "music/"+songs.name+".mp3";
+            img.src = "images/"+songs.musiclist+".png";
+        }
+
+       
+        songindex = 0
+        const nextSong = ()=>{
+            loadSongs(songs[(songindex+=1)%songs.length]);
+            playmusic();
+        }
+
+        const prevSong = ()=>{
+            loadSongs(songs[(songindex-=1)%songs.length]);
+            playmusic();
+        }
+        
+       next.addEventListener("click",nextSong)
+        prev.addEventListener("click",prevSong)
+        
+    </script>
+    
+</body>
+</html>
